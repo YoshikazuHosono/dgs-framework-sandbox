@@ -5,6 +5,7 @@ import com.example.demo.gen.graphql.types.Show
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.InputArgument
+import java.lang.RuntimeException
 
 
 @DgsComponent
@@ -20,6 +21,8 @@ class ShowsDatafetcher {
 
     @DgsQuery(field = DgsConstants.QUERY.Shows)
     fun showsQuery(@InputArgument titleFilter: String?): List<Show> {
+        if (titleFilter != null && titleFilter == "error") throw RuntimeException("you need err ???")
+
         return if (titleFilter == null) shows
         else shows.filter { it.title?.contains(titleFilter) ?: false }
     }
