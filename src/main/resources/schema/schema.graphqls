@@ -1,8 +1,14 @@
 type Query {
     shows(titleFilter: String): [Show]
+    views(titleFilter: String): [View]
 }
 
 type Show {
+    title: String
+    releaseYear: Int
+}
+
+type View {
     title: String
     releaseYear: Int
 }
