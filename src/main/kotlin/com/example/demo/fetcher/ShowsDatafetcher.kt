@@ -1,5 +1,6 @@
 package com.example.demo.fetcher
 
+import com.example.demo.gen.graphql.types.Show
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.InputArgument
@@ -17,11 +18,10 @@ class ShowsDatafetcher {
     )
 
     @DgsQuery
-    fun shows(@InputArgument titleFilter: String?) : List<Show> {
+    fun shows(@InputArgument titleFilter: String?): List<Show> {
         return if (titleFilter == null) shows
-        else shows.filter { it.title.contains(titleFilter) }
+        else shows.filter { it.title?.contains(titleFilter) ?: false }
     }
 
 }
 
-data class Show(val title: String, val releaseYear: Int)

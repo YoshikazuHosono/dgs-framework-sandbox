@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 
 plugins {
 	id("org.springframework.boot") version "2.7.2"
 	id("io.spring.dependency-management") version "1.0.12.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
+	id("com.netflix.dgs.codegen") version "5.2.5"
 }
 
 group = "com.example"
@@ -26,6 +28,12 @@ dependencies {
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.withType<GenerateJavaTask> {
+	schemaPaths = mutableListOf("${projectDir}/src/main/resources/schema")
+	packageName = "com.example.demo.gen.graphql"
+	generateClient = false
 }
 
 tasks.withType<KotlinCompile> {
